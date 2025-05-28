@@ -1,0 +1,99 @@
+<script>function Rekenmodel() {
+
+/*****************************
+**      STARTWAARDEN        **
+******************************/
+
+m = 10;   
+d = 2;      
+v = 0;      
+dv = 0.001;   
+vmax = 20;  
+//****************************
+//**	  MODELREGELS       **
+//****************************
+
+while (v <= vmax) {
+    F = m * (-(v * v) / (2 * d)); 
+    grafiek(v, -F);  
+    v = v + dv;
+  }
+grafiek(v,F);        
+
+}
+
+//*****************************
+//**     GRAFIEKINSTELLINGEN **
+//*****************************			
+
+titel="Kracht ten opzichte van snelheid"    
+
+xlabel="snelheid (m/s)";		
+minx=0; 		
+maxx=20;			
+lijntjesx= 20;                
+
+ylabel="Kracht (N)";	
+miny=0;			
+maxy=1000; 			
+lijntjesy=10;                   
+
+
+function grafiek(x,y)
+{
+ctx.fillRect(margin-2+((x-minx)*(hsize-2*margin)/(maxx-minx)),vsize-margin-2-((y-miny)*(vsize-2*margin)/(maxy-miny)),4,4);
+}
+</script>
+<h1 id="titel"></h1><br>
+<canvas id="grafiek" width="1800" height="800">Helaas...deze browser ondersteunt geen HTML5/Canvas.
+<br>Gebruik een andere (modernere) browser<br><br><br><br><br></canvas>
+<script>
+
+document.getElementById("titel").innerHTML = titel;
+document.title=titel;
+
+var hsize=1800;
+var vsize=800;
+var margin=25;
+var c = document.getElementById("grafiek");
+var ctx = c.getContext("2d");
+var linenum=10;
+ctx.fillStyle = "#000000";
+ctx.strokeStyle="#dddddd";
+ctx.fillRect(margin,margin,2,(vsize-2*margin));
+ctx.fillRect(margin,(vsize-margin),(hsize-2*margin),2);
+
+for (i = 1; i < lijntjesx+1; i++) 
+{ 
+ctx.moveTo((margin+((hsize-2*margin)/lijntjesx)*i),(vsize-margin));
+ctx.lineTo((margin+((hsize-2*margin)/lijntjesx)*i),margin);
+ctx.stroke();
+}
+
+for (i = 0; i < lijntjesy; i++) { 
+ctx.moveTo(margin,margin+(((vsize-2*margin)/lijntjesy)*i));
+ctx.lineTo((hsize-margin),margin+(((vsize-2*margin)/lijntjesy)*i));
+ctx.stroke();
+}
+ctx.font = "15px Arial";
+ctx.textAlign="end"; 
+ctx.fillText(maxx,hsize,vsize);
+ctx.textAlign="start";
+ctx.fillText(maxy,0,margin);
+ctx.fillText(minx,margin,vsize);
+ctx.fillText(miny,0,vsize-margin);
+ctx.textAlign="center";
+ctx.fillText(xlabel,hsize/2,vsize-5);
+ctx.save();
+ctx.rotate(-Math.PI / 2);
+ctx.translate(-(vsize/2),-5);
+ctx.fillText(ylabel,20,20);
+ctx.restore();
+Rekenmodel();
+</script>
+<br><br>
+<big><big><big><strong>Hier zie je een model waarbij de snelheid op de x-as is afgebeeld en de kracht die nodig is om het object te stoppen op de y-as</strong></big></big></big>
+
+
+
+
